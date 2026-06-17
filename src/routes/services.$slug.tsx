@@ -59,7 +59,7 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServiceDetailPage() {
-  const { service } = Route.useLoaderData();
+  const { service } = Route.useLoaderData() as { service: NonNullable<ReturnType<typeof getServiceBySlug>> };
   const { open } = useQuote();
   const related = SERVICES.filter((s) => s.slug !== service.slug).slice(0, 3);
 
