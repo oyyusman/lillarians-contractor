@@ -1,0 +1,180 @@
+import { useEffect, useMemo, useState } from "react";
+import { useQuote } from "@/lib/quote-context";
+import { SERVICES } from "@/lib/services-data";
+
+export function QuoteModal() {
+  const { isOpen, close, presetCategory } = useQuote();
+  const [submitted, setSubmitted] = useState(false);
+  const [category, setCategory] = useState(presetCategory ?? "");
+
+  useEffect(() => {
+    if (presetCategory) setCategory(presetCategory);
+  }, [presetCategory]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const subOptions = useMemo(() => {
+    const svc = SERVICES.find((s) => s.title === category);
+    return svc?.subServices ?? [];
+  }, [category]);
+
+  if (!isOpen) return null;
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Frontend-only: simulate success
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      close();
+    }, 2400);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-fade"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="quote-title"
+    >
+      <button
+        type="button"
+        aria-label="Close quote form"
+        onClick={close}
+        className="absolute inset-0 bg-background/85 backdrop-blur-md"
+      />
+      <div className="relative z-10 w-full max-w-xl max-h-[92vh] overflow-y-auto glass rounded-md p-8 md:p-10 animate-reveal">
+        <button
+          onClick={close}
+          aria-label="Close"
+          className="absolute top-4 right-4 text-foreground/60 hover:text-foreground transition-colors text-2xl leading-none"
+        >
+          ×
+        </button>
+
+        {submitted ? (
+          <div className="py-12 text-center">
+            <div className="mx-auto w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-6">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent">
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="font-serif italic text-2xl mb-3 text-accent">Request received</h3>
+            <p className="text-sm text-foreground/70 max-w-sm mx-auto">
+              A project advisor will reach out within one business day to schedule your on-site consultation.
+            </p>
+          </div>
+        ) : (
+          <>
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent">Step 01 / Consultation</span>
+            <h2 id="quote-title" className="font-display font-bold text-3xl uppercase tracking-tighter mt-2 mb-2">
+              Request a <span className="font-serif italic text-accent normal-case">Quote</span>
+            </h2>
+            <p className="text-sm text-foreground/60 mb-7">
+              Tell us about your property. We'll reply within one business day.
+            </p>
+
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FormField label="Full Name" name="name" required />
+                <FormField label="Phone" name="phone" type="tel" required />
+              </div>
+              <FormField label="Email" name="email" type="email" required />
+
+              <div>
+                <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
+                  Service Category
+                </label>
+                <select
+                  required
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
+                >
+                  <option value="">Select a category…</option>
+                  {SERVICES.map((s) => (
+                    <option key={s.slug} value={s.title}>{s.title}</option>
+                  ))}
+                </select>
+              </div>
+
+              {subOptions.length > 0 && (
+                <div>
+                  <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
+                    Sub-Service
+                  </label>
+                  <select
+                    name="subService"
+                    className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
+                  >
+                    <option value="">Optional — pick a sub-service</option>
+                    {subOptions.map((sub) => (
+                      <option key={sub} value={sub}>{sub}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
+                  Project Details
+                </label>
+                <textarea
+                  name="details"
+                  rows={4}
+                  maxLength={1000}
+                  required
+                  placeholder="Briefly describe what you're looking to have done…"
+                  className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm"
+              >
+                Send Request
+              </button>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 text-center pt-2">
+                Serving DC · Maryland · Virginia
+              </p>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FormField({
+  label,
+  name,
+  type = "text",
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
+        {label}
+      </label>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        maxLength={120}
+        className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
+      />
+    </div>
+  );
+}
