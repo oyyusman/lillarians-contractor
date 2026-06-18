@@ -38,7 +38,7 @@ export const Route = createFileRoute("/services/$slug")({
             hasOfferCatalog: {
               "@type": "OfferCatalog",
               name: s.title,
-              itemListElement: s.subServices.map((sub) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: sub } })),
+              itemListElement: s.subServices.map((sub) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: sub.name } })),
             },
           }),
         },
@@ -110,13 +110,21 @@ function ServiceDetailPage() {
               Every <span className="font-serif italic text-accent normal-case">sub-service</span>
             </h2>
           </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {service.subServices.map((sub, i) => (
-              <Reveal key={sub} delay={i * 30} className="group border border-border bg-background p-5 hover:border-accent transition-colors rounded-sm">
-                <div className="flex items-start gap-3">
+              <Reveal key={sub.slug} delay={i * 30} className="group flex flex-col border border-border bg-background p-6 hover:border-accent transition-colors rounded-sm">
+                <div className="flex items-start gap-3 mb-3">
                   <span className="text-[10px] font-mono text-accent mt-1 shrink-0">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-sm font-medium leading-snug">{sub}</span>
+                  <h3 className="text-base font-display font-semibold leading-snug uppercase tracking-tight">{sub.name}</h3>
                 </div>
+                <p className="text-sm text-foreground/60 leading-relaxed mb-5 flex-1">{sub.blurb}</p>
+                <Link
+                  to="/services/$slug/$subSlug"
+                  params={{ slug: service.slug, subSlug: sub.slug }}
+                  className="text-[10px] font-mono uppercase tracking-widest text-accent story-link mt-auto"
+                >
+                  Learn more →
+                </Link>
               </Reveal>
             ))}
           </div>

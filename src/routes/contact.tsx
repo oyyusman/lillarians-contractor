@@ -37,8 +37,8 @@ function ContactPage() {
             <h2 className="text-3xl font-display font-bold uppercase tracking-tighter mb-8">Reach us directly</h2>
             <dl className="space-y-6">
               {[
-                { l: "Phone", v: "+1 (202) 555-0192", href: "tel:+12025550192" },
-                { l: "Email", v: "hello@lillarians.com", href: "mailto:hello@lillarians.com" },
+                { l: "Phone", v: "+1 (703) 400-4198", href: "tel:+17034004198" },
+                { l: "Email", v: "info@lillarians.contractors", href: "mailto:info@lillarians.contractors" },
                 { l: "Address", v: "Bethesda, MD · Serving the entire DMV" },
                 { l: "Hours", v: "Mon–Sat · 7am–7pm" },
               ].map((c) => (
