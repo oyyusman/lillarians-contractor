@@ -115,7 +115,7 @@ export function QuoteModal() {
                   >
                     <option value="">Optional — pick a sub-service</option>
                     {subOptions.map((sub) => (
-                      <option key={sub} value={sub}>{sub}</option>
+                      <option key={sub.slug} value={sub.name}>{sub.name}</option>
                     ))}
                   </select>
                 </div>
