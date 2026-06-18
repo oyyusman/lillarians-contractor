@@ -109,8 +109,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           description:
             "Premium landscaping, pressure washing, outdoor living, home improvement, junk removal, and seasonal contractor services across the DMV area.",
           areaServed: ["Washington DC", "Maryland", "Virginia"],
-          telephone: "+1-202-555-0192",
-          email: "hello@lillarians.com",
+          telephone: "+1-703-400-4198",
+          email: "info@lillarians.contractors",
           address: {
             "@type": "PostalAddress",
             addressLocality: "Bethesda",
