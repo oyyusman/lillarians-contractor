@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { QuoteProvider } from "@/lib/quote-context";
+import { QuoteModal } from "@/components/QuoteModal";
 
 function NotFoundComponent() {
   return (
@@ -146,7 +148,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <QuoteProvider>
+        <Outlet />
+        <QuoteModal />
+      </QuoteProvider>
     </QueryClientProvider>
   );
 }
