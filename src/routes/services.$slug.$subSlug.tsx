@@ -55,7 +55,7 @@ export const Route = createFileRoute("/services/$slug/$subSlug")({
 });
 
 function SubServicePage() {
-  const { service, subService } = Route.useLoaderData();
+  const { service, subService } = Route.useLoaderData() as NonNullable<ReturnType<typeof getSubServiceBySlug>>;
   const { open } = useQuote();
   const related = service.subServices.filter((s) => s.slug !== subService.slug).slice(0, 4);
 
