@@ -38,7 +38,7 @@ export const Route = createFileRoute("/services/$slug")({
             hasOfferCatalog: {
               "@type": "OfferCatalog",
               name: s.title,
-              itemListElement: s.subServices.map((sub) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: sub } })),
+              itemListElement: s.subServices.map((sub) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: sub.name } })),
             },
           }),
         },
