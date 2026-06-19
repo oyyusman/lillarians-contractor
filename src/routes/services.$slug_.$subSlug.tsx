@@ -25,7 +25,7 @@ const getProofPair = (serviceSlug: string) =>
     note: "Before-and-after project documentation showing the cleaner, safer, finished property condition.",
   };
 
-export const Route = createFileRoute("/services/$slug/$subSlug")({
+export const Route = createFileRoute("/services/$slug_/$subSlug")({
   loader: ({ params }) => {
     const result = getSubServiceBySlug(params.slug, params.subSlug);
     if (!result) throw notFound();
