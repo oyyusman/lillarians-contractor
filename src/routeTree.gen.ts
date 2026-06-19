@@ -18,7 +18,6 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
-import { Route as ServicesSlugIndexRouteImport } from './routes/services.$slug.index'
 import { Route as ServicesSlugSubSlugRouteImport } from './routes/services.$slug.$subSlug'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -66,11 +65,6 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
   path: '/services/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesSlugIndexRoute = ServicesSlugIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ServicesSlugRoute,
-} as any)
 const ServicesSlugSubSlugRoute = ServicesSlugSubSlugRouteImport.update({
   id: '/$subSlug',
   path: '/$subSlug',
@@ -88,7 +82,6 @@ export interface FileRoutesByFullPath {
   '/services/$slug': typeof ServicesSlugRouteWithChildren
   '/services/': typeof ServicesIndexRoute
   '/services/$slug/$subSlug': typeof ServicesSlugSubSlugRoute
-  '/services/$slug/': typeof ServicesSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -98,9 +91,9 @@ export interface FileRoutesByTo {
   '/how-we-work': typeof HowWeWorkRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/testimonials': typeof TestimonialsRoute
+  '/services/$slug': typeof ServicesSlugRouteWithChildren
   '/services': typeof ServicesIndexRoute
   '/services/$slug/$subSlug': typeof ServicesSlugSubSlugRoute
-  '/services/$slug': typeof ServicesSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -114,7 +107,6 @@ export interface FileRoutesById {
   '/services/$slug': typeof ServicesSlugRouteWithChildren
   '/services/': typeof ServicesIndexRoute
   '/services/$slug/$subSlug': typeof ServicesSlugSubSlugRoute
-  '/services/$slug/': typeof ServicesSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -129,7 +121,6 @@ export interface FileRouteTypes {
     | '/services/$slug'
     | '/services/'
     | '/services/$slug/$subSlug'
-    | '/services/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -139,9 +130,9 @@ export interface FileRouteTypes {
     | '/how-we-work'
     | '/sitemap.xml'
     | '/testimonials'
+    | '/services/$slug'
     | '/services'
     | '/services/$slug/$subSlug'
-    | '/services/$slug'
   id:
     | '__root__'
     | '/'
@@ -154,7 +145,6 @@ export interface FileRouteTypes {
     | '/services/$slug'
     | '/services/'
     | '/services/$slug/$subSlug'
-    | '/services/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -234,13 +224,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/$slug/': {
-      id: '/services/$slug/'
-      path: '/'
-      fullPath: '/services/$slug/'
-      preLoaderRoute: typeof ServicesSlugIndexRouteImport
-      parentRoute: typeof ServicesSlugRoute
-    }
     '/services/$slug/$subSlug': {
       id: '/services/$slug/$subSlug'
       path: '/$subSlug'
@@ -253,12 +236,10 @@ declare module '@tanstack/react-router' {
 
 interface ServicesSlugRouteChildren {
   ServicesSlugSubSlugRoute: typeof ServicesSlugSubSlugRoute
-  ServicesSlugIndexRoute: typeof ServicesSlugIndexRoute
 }
 
 const ServicesSlugRouteChildren: ServicesSlugRouteChildren = {
   ServicesSlugSubSlugRoute: ServicesSlugSubSlugRoute,
-  ServicesSlugIndexRoute: ServicesSlugIndexRoute,
 }
 
 const ServicesSlugRouteWithChildren = ServicesSlugRoute._addFileChildren(
