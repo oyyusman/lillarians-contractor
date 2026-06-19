@@ -1,10 +1,31 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Reveal } from "@/components/Reveal";
+import { BeforeAfter } from "@/components/BeforeAfter";
 import { getSubServiceBySlug } from "@/lib/services-data";
 import { useQuote } from "@/lib/quote-context";
+import b1 from "@/assets/ba-before.jpg";
+import a1 from "@/assets/ba-after.jpg";
+import b2 from "@/assets/ba2-before.jpg";
+import a2 from "@/assets/ba2-after.jpg";
+import b3 from "@/assets/ba3-before.jpg";
+import a3 from "@/assets/ba3-after.jpg";
 
-export const Route = createFileRoute("/services/$slug/$subSlug")({
+const proofPairByService: Record<string, { before: string; after: string; title: string; note: string }> = {
+  "lawn-care-landscaping": { before: b1, after: a1, title: "Landscape transformation", note: "Turf, beds, and outdoor surfaces restored with clean lines and premium finish work." },
+  "pressure-washing": { before: b2, after: a2, title: "Exterior surface restoration", note: "Stains, algae, mildew, and built-up grime removed with surface-specific washing methods." },
+  "build-outdoor-living": { before: b3, after: a3, title: "Outdoor living build", note: "A blank or outdated yard converted into a finished outdoor space with durable materials." },
+};
+
+const getProofPair = (serviceSlug: string) =>
+  proofPairByService[serviceSlug] ?? {
+    before: b1,
+    after: a1,
+    title: "Property improvement result",
+    note: "Before-and-after project documentation showing the cleaner, safer, finished property condition.",
+  };
+
+export const Route = createFileRoute("/services/$slug_/$subSlug")({
   loader: ({ params }) => {
     const result = getSubServiceBySlug(params.slug, params.subSlug);
     if (!result) throw notFound();
@@ -58,6 +79,7 @@ function SubServicePage() {
   const { service, subService } = Route.useLoaderData() as NonNullable<ReturnType<typeof getSubServiceBySlug>>;
   const { open } = useQuote();
   const related = service.subServices.filter((s) => s.slug !== subService.slug).slice(0, 4);
+  const proofPair = getProofPair(service.slug);
 
   return (
     <SiteLayout>
@@ -109,6 +131,33 @@ function SubServicePage() {
                 </li>
               ))}
             </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="py-20 md:py-28 border-y border-border bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+          <Reveal>
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent">Project Visuals</span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold uppercase tracking-tighter mt-3 mb-6">
+              Pictures and <span className="font-serif italic text-accent normal-case">results</span>
+            </h2>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-border mb-6">
+              <img src={service.image} alt={`${subService.name} project example`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="text-sm text-foreground/80">{subService.name} is planned, prepared, executed, and cleaned up by a dedicated Lillarians crew.</p>
+              </div>
+            </div>
+            <p className="text-foreground/65 leading-relaxed">
+              Each project receives a clear scope, site protection, professional execution, and final walk-through so the finished result matches the written proposal.
+            </p>
+          </Reveal>
+          <Reveal delay={150}>
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent">Before & After Gallery</span>
+            <h3 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-tight mt-3 mb-3">{proofPair.title}</h3>
+            <p className="text-foreground/65 mb-6">{proofPair.note}</p>
+            <BeforeAfter before={proofPair.before} after={proofPair.after} alt={`${subService.name} before and after`} />
           </Reveal>
         </div>
       </section>
