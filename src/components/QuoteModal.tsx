@@ -5,6 +5,8 @@ import { SERVICES } from "@/lib/services-data";
 export function QuoteModal() {
   const { isOpen, close, presetCategory } = useQuote();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [category, setCategory] = useState(presetCategory ?? "");
 
   useEffect(() => {
