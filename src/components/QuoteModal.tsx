@@ -5,6 +5,8 @@ import { SERVICES } from "@/lib/services-data";
 export function QuoteModal() {
   const { isOpen, close, presetCategory } = useQuote();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [category, setCategory] = useState(presetCategory ?? "");
 
   useEffect(() => {
@@ -26,15 +28,42 @@ export function QuoteModal() {
 
   if (!isOpen) return null;
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Frontend-only: simulate success
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      close();
-    }, 2400);
+    if (submitting) return;
+    setErrorMsg(null);
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    fd.append("_subject", `New Quote Request — ${fd.get("name") ?? "Lillarians site"}`);
+    fd.append("_template", "table");
+    fd.append("_captcha", "false");
+    fd.append("Service Category", category);
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/oyysirsyedian@gmail.com", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: fd,
+      });
+      if (!res.ok) throw new Error(`Submit failed (${res.status})`);
+      setSubmitted(true);
+      form.reset();
+      setCategory("");
+      setTimeout(() => {
+        setSubmitted(false);
+        close();
+      }, 3200);
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : "Could not send your request. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
+
 
   return (
     <div
@@ -65,9 +94,9 @@ export function QuoteModal() {
                 <path d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="font-serif italic text-2xl mb-3 text-accent">Request received</h3>
+            <h3 className="font-serif italic text-2xl mb-3 text-accent">Response has been sent</h3>
             <p className="text-sm text-foreground/70 max-w-sm mx-auto">
-              A project advisor will reach out within one business day to schedule your on-site consultation.
+              Our team will contact you shortly.
             </p>
           </div>
         ) : (
@@ -135,11 +164,18 @@ export function QuoteModal() {
                 />
               </div>
 
+              {errorMsg && (
+                <p className="text-xs text-red-400 font-mono pt-1" role="alert">
+                  {errorMsg}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm"
+                disabled={submitting}
+                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Request
+                {submitting ? "Sending…" : "Send Request"}
               </button>
               <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 text-center pt-2">
                 Serving DC · Maryland · Virginia
