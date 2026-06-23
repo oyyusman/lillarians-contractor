@@ -3,7 +3,6 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { SERVICES } from "@/lib/services-data";
 import { useQuote } from "@/lib/quote-context";
 import { Reveal } from "@/components/Reveal";
-import { Counter } from "@/components/Counter";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Testimonials } from "@/components/Testimonials";
 import heroImg from "@/assets/hero-dusk.jpg";
