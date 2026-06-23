@@ -94,9 +94,9 @@ export function QuoteModal() {
                 <path d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="font-serif italic text-2xl mb-3 text-accent">Request received</h3>
+            <h3 className="font-serif italic text-2xl mb-3 text-accent">Response has been sent</h3>
             <p className="text-sm text-foreground/70 max-w-sm mx-auto">
-              A project advisor will reach out within one business day to schedule your on-site consultation.
+              Our team will contact you shortly.
             </p>
           </div>
         ) : (
