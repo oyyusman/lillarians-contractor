@@ -88,28 +88,6 @@ function Hero() {
   );
 }
 
-function Stats() {
-  const stats = [
-    { value: 850, suffix: "+", label: "Projects Completed" },
-    { value: 12, suffix: "", label: "Years in DMV" },
-    { value: 3, suffix: "", label: "Jurisdictions" },
-    { value: 98, suffix: "%", label: "Client Retention" },
-  ];
-  return (
-    <section className="py-20 md:py-28 border-y border-border">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
-        {stats.map((s, i) => (
-          <Reveal key={s.label} delay={i * 100} className="text-center">
-            <div className="text-4xl md:text-5xl font-display font-bold mb-2">
-              <Counter to={s.value} suffix={s.suffix} />
-            </div>
-            <div className="text-[10px] font-mono uppercase tracking-widest opacity-50">{s.label}</div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function ServicesGrid() {
   return (
