@@ -28,15 +28,42 @@ export function QuoteModal() {
 
   if (!isOpen) return null;
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Frontend-only: simulate success
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      close();
-    }, 2400);
+    if (submitting) return;
+    setErrorMsg(null);
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    fd.append("_subject", `New Quote Request — ${fd.get("name") ?? "Lillarians site"}`);
+    fd.append("_template", "table");
+    fd.append("_captcha", "false");
+    fd.append("Service Category", category);
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/oyysirsyedian@gmail.com", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: fd,
+      });
+      if (!res.ok) throw new Error(`Submit failed (${res.status})`);
+      setSubmitted(true);
+      form.reset();
+      setCategory("");
+      setTimeout(() => {
+        setSubmitted(false);
+        close();
+      }, 3200);
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : "Could not send your request. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
+
 
   return (
     <div
