@@ -164,11 +164,18 @@ export function QuoteModal() {
                 />
               </div>
 
+              {errorMsg && (
+                <p className="text-xs text-red-400 font-mono pt-1" role="alert">
+                  {errorMsg}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm"
+                disabled={submitting}
+                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Request
+                {submitting ? "Sending…" : "Send Request"}
               </button>
               <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 text-center pt-2">
                 Serving DC · Maryland · Virginia
