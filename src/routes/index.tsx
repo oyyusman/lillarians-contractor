@@ -27,7 +27,7 @@ function HomePage() {
   return (
     <SiteLayout>
       <Hero />
-      <Stats />
+      
       <ServicesGrid />
       <About />
       <BeforeAfterSection />
