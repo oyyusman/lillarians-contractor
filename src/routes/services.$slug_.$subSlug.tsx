@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Reveal } from "@/components/Reveal";
-import { BeforeAfter } from "@/components/BeforeAfter";
 import { getSubServiceBySlug } from "@/lib/services-data";
 import { useQuote } from "@/lib/quote-context";
 
@@ -118,8 +117,6 @@ function buildImagery(serviceSlug: string, subSlug: string, serviceTitle: string
   return {
     hero: url(1920, 1080, "hero"),
     gallery: url(1200, 900, "gallery"),
-    before: url(1200, 800, "before"),
-    after: url(1200, 800, "after"),
   };
 }
 
@@ -273,9 +270,9 @@ function SubServicePage() {
         </div>
       </section>
 
-      {/* PROJECT VISUALS + BEFORE/AFTER ---------------------------------- */}
+      {/* PROJECT VISUALS -------------------------------------------------- */}
       <section className="py-20 md:py-28 border-y border-border bg-secondary/30">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
+        <div className="max-w-3xl mx-auto px-6 text-center">
           <Reveal>
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent">Project Visuals</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold uppercase tracking-tighter mt-3 mb-6">
@@ -300,21 +297,6 @@ function SubServicePage() {
               surrounding plantings and surfaces, professional execution by trained crews, and a final walk-through
               so the finished result matches the written proposal you approved.
             </p>
-          </Reveal>
-          <Reveal delay={150}>
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent">Before & After Gallery</span>
-            <h3 className="text-2xl md:text-3xl font-display font-bold uppercase tracking-tight mt-3 mb-3">
-              {subService.name} transformation
-            </h3>
-            <p className="text-foreground/70 mb-6">
-              Real {subService.name.toLowerCase()} results. Drag the divider to compare the starting condition with
-              the finished work delivered by our crew.
-            </p>
-            <BeforeAfter
-              before={imagery.before}
-              after={imagery.after}
-              alt={`${subService.name} before and after`}
-            />
           </Reveal>
         </div>
       </section>
