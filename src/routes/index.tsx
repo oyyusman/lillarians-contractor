@@ -6,8 +6,8 @@ import { Reveal } from "@/components/Reveal";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Testimonials } from "@/components/Testimonials";
 import heroImg from "@/assets/hero-dusk.jpg";
-import baBefore from "@/assets/ba-before.jpg";
-import baAfter from "@/assets/ba-after.jpg";
+import baBefore from "@/assets/bc-before.png";
+import baAfter from "@/assets/bc-after.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
