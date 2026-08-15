@@ -117,14 +117,14 @@ function ServicesGrid() {
                   width={800}
                   height={1000}
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/35 to-transparent" />
                 <div className="absolute inset-0 p-7 flex flex-col justify-end">
-                  <span className="text-[10px] font-mono text-accent uppercase tracking-widest mb-2 block">{s.number}</span>
-                  <h3 className="text-2xl font-display font-bold uppercase mb-3 leading-tight">{s.title}</h3>
-                  <p className="text-sm text-foreground/70 mb-4">{s.tagline}</p>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-accent story-link">Learn more →</span>
+                  <span className="text-[10px] font-mono text-background/70 uppercase tracking-widest mb-2 block">{s.number}</span>
+                  <h3 className="text-2xl font-display font-bold uppercase mb-3 leading-tight text-background">{s.title}</h3>
+                  <p className="text-sm text-background/80 mb-4">{s.tagline}</p>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-background story-link">Learn more →</span>
                 </div>
               </Link>
             </Reveal>
