@@ -202,12 +202,13 @@ function FormField({
   name,
   type = "text",
   required,
+  ...rest
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
-}) {
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "name" | "type" | "required">) {
   return (
     <div>
       <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
@@ -218,7 +219,8 @@ function FormField({
         type={type}
         required={required}
         maxLength={120}
-        className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
+        {...rest}
+        className="w-full bg-card border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
       />
     </div>
   );
