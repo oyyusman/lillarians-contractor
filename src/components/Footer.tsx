@@ -56,7 +56,6 @@ export function Footer() {
           <div className="md:col-span-2">
             <h4 className="font-mono text-[10px] uppercase tracking-widest text-accent mb-6">Reach Us</h4>
             <ul className="space-y-3 text-sm text-foreground/60">
-              <li>Bethesda, MD</li>
               <li><a href="tel:+17034004198" className="hover:text-foreground">+1 (703) 400-4198</a></li>
               <li><a href="mailto:info@lillarians.contractors" className="hover:text-foreground">info@lillarians.contractors</a></li>
             </ul>

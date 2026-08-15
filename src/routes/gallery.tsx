@@ -2,20 +2,30 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { Reveal } from "@/components/Reveal";
-import b1 from "@/assets/ba-before.jpg";
-import a1 from "@/assets/ba-after.jpg";
-import b2 from "@/assets/ba2-before.jpg";
-import a2 from "@/assets/ba2-after.jpg";
+import lawnBefore from "@/assets/lawn-before.png";
+import lawnAfter from "@/assets/lawn-after.jpg";
+import fertBefore from "@/assets/fert-before.png";
+import fertAfter from "@/assets/fert-after.png";
 import b3 from "@/assets/ba3-before.jpg";
 import a3 from "@/assets/ba3-after.jpg";
+import snowbefore from "@/assets/Snow Removal/Before.png";
+import snowafter from "@/assets/Snow Removal/After.png";
+import fencebefore from "@/assets/Fence Installation & Repair/before.png";
+import fenceafter from "@/assets/Fence Installation & Repair/after.png";
+import paintbefore from "@/assets/Interior Painting/before.png";
+import paintafter from "@/assets/Interior Painting/after.png";
+
+
+
 
 const PAIRS = [
-  { category: "Landscape Renovation", title: "Bethesda backyard transformation", before: b1, after: a1, note: "Overgrown yard restored to a curated estate landscape with new patio, plantings, and bed work." },
-  { category: "Pressure Washing", title: "Algae-stained driveway restored", before: b2, after: a2, note: "Soft-wash and surface cleaner combo removed years of buildup without damaging the concrete finish." },
-  { category: "Build & Outdoor Living", title: "Empty yard to outdoor kitchen", before: b3, after: a3, note: "Full design-build: pergola, outdoor kitchen, lighting, and pavers — completed in 18 working days." },
-  { category: "Landscape Renovation", title: "Front yard curb appeal refresh", before: b1, after: a1, note: "Sod replacement, mulching, and architectural plantings before a real estate listing." },
-  { category: "Pressure Washing", title: "Walkway brightening", before: b2, after: a2, note: "Specialty rust and tannin removal applied to a heavily shaded north-facing walkway." },
-  { category: "Build & Outdoor Living", title: "Pavilion & seating wall build", before: b3, after: a3, note: "Cedar pavilion with built-in seating walls and ambient low-voltage lighting." },
+  { category: "Lawn Care", title: "Lawn Mowing & Maintenance", before: lawnBefore, after: lawnAfter, note: "Overgrown grass restored with professional mowing and edging." },
+  { category: "Lawn Care", title: "Lawn Fertilization", before: fertBefore, after: fertAfter, note: "Weed control and fertilization program transformed a patchy lawn into a dense, deep-green turf." },
+  { category: "Seasonal Services", title: "Snow Removal ", before: snowbefore, after: snowafter, note: "From snow-covered to safe and accessible—see the difference we make." },
+  { category: "Contractor & Home Improvement", title: "Fence Installation & Repair", before: fencebefore, after: fenceafter, note: "See how our expert fence installation and repair services enhance security and curb appeal." },
+  { category: "Contractor & Home Improvement", title: "Interior Painting", before: paintbefore, after: paintafter, note: "See how a fresh coat of paint transforms interiors into bright, beautiful spaces." },
+
+
 ];
 
 export const Route = createFileRoute("/gallery")({

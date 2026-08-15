@@ -5,8 +5,29 @@ import { getSubServiceBySlug } from "@/lib/services-data";
 import { useQuote } from "@/lib/quote-context";
 import { getSubServiceImagery } from "@/lib/sub-service-images";
 
-function buildImagery(_serviceSlug: string, subSlug: string, _serviceTitle: string, _subName: string) {
-  return getSubServiceImagery(subSlug);
+const localImages = import.meta.glob<{ default: string }>('/src/assets/**/*.{png,jpg,jpeg,webp}', { eager: true });
+
+function buildImagery(_serviceSlug: string, subSlug: string, _serviceTitle: string, subName: string) {
+  let hero = '';
+  let gallery = '';
+
+  for (const path in localImages) {
+    if (path.includes(`/assets/${subName}/`) || path.includes(`/assets/${subSlug}/`)) {
+      if (path.toLowerCase().includes('hero')) {
+        hero = localImages[path].default;
+      }
+      if (path.toLowerCase().includes('gallery')) {
+        gallery = localImages[path].default;
+      }
+    }
+  }
+
+  const unsplash = getSubServiceImagery(subSlug);
+
+  return {
+    hero: hero || unsplash.hero,
+    gallery: gallery || unsplash.gallery,
+  };
 }
 
 // ----- Route -----------------------------------------------------------------

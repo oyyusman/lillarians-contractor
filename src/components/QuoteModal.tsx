@@ -42,7 +42,7 @@ export function QuoteModal() {
     fd.append("Service Category", category);
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/oyysirsyedian@gmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/info@lillarians.contractors", {
         method: "POST",
         headers: { Accept: "application/json" },
         body: fd,
