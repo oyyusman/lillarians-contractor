@@ -122,9 +122,10 @@
 
 /* Glassmorphism surface */
 .glass {
-  background: rgba(17, 20, 15, 0.55);
-  backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(242, 242, 235, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(20, 32, 26, 0.1);
+  box-shadow: 0 20px 60px -25px rgba(20, 32, 26, 0.35);
 }
 
 /* Magnetic underline */
