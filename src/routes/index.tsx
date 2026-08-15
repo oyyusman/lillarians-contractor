@@ -50,7 +50,7 @@ function Hero() {
           height={1080}
           className="absolute inset-0 w-full h-full object-cover animate-ken-burns"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
       </div>
 
       <div className="relative z-10 max-w-5xl text-center px-6 animate-reveal">

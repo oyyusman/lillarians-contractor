@@ -111,10 +111,19 @@ export function QuoteModal() {
 
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
-                <FormField label="Full Name" name="name" required />
-                <FormField label="Phone" name="phone" type="tel" required />
+                <FormField label="Full Name" name="name" required placeholder="Jane Smith" />
+                <FormField
+                  label="Phone Number (US)"
+                  name="phone"
+                  type="tel"
+                  required
+                  placeholder="(703) 400-4198"
+                  inputMode="tel"
+                  pattern="^(\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                  title="Enter a valid US phone number, e.g. (703) 400-4198"
+                />
               </div>
-              <FormField label="Email" name="email" type="email" required />
+              <FormField label="Email" name="email" type="email" required placeholder="you@example.com" />
 
               <div>
                 <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
@@ -193,12 +202,13 @@ function FormField({
   name,
   type = "text",
   required,
+  ...rest
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
-}) {
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "name" | "type" | "required">) {
   return (
     <div>
       <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">
@@ -209,7 +219,8 @@ function FormField({
         type={type}
         required={required}
         maxLength={120}
-        className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
+        {...rest}
+        className="w-full bg-card border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors"
       />
     </div>
   );
