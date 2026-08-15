@@ -54,14 +54,14 @@ function Hero() {
       </div>
 
       <div className="relative z-10 max-w-5xl text-center px-6 animate-reveal">
-        <span className="inline-block text-[10px] font-mono uppercase tracking-[0.4em] text-accent mb-6 animate-shimmer">
+        <span className="inline-block text-[10px] font-mono uppercase tracking-[0.4em] text-white mb-6 animate-shimmer">
           DMV · Licensed & Insured · Est. Premier Contractor
         </span>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter text-balance mb-7 uppercase leading-[0.95]">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter text-balance mb-7 uppercase leading-[0.95] text-white">
           Transforming <br />
-          <span className="font-serif italic text-accent normal-case tracking-normal">Outdoor Spaces</span>
+          <span className="font-serif italic text-white normal-case tracking-normal">Outdoor Spaces</span>
         </h1>
-        <p className="max-w-2xl mx-auto text-base md:text-lg text-foreground/75 text-pretty mb-10">
+        <p className="max-w-2xl mx-auto text-base md:text-lg text-white/90 text-pretty mb-10">
           Landscaping, pressure washing, outdoor living, home improvement, and property maintenance across the DMV area.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -73,7 +73,7 @@ function Hero() {
           </button>
           <Link
             to="/services"
-            className="w-full sm:w-auto px-8 py-4 border border-white/20 font-mono text-xs uppercase tracking-widest hover:bg-white/5 transition-colors rounded-sm"
+            className="w-full sm:w-auto px-8 py-4 border-2 border-white text-white bg-black/20 font-mono text-xs uppercase tracking-widest hover:bg-white/20 hover:text-white transition-all rounded-sm backdrop-blur-sm"
           >
             Explore Services
           </Link>
