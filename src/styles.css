@@ -42,31 +42,31 @@
 
 :root {
   --radius: 0.25rem;
-  --background: #0a0c0b;
-  --foreground: #f2f2eb;
-  --card: #11140f;
-  --card-foreground: #f2f2eb;
-  --popover: #11140f;
-  --popover-foreground: #f2f2eb;
+  --background: #f7f6f1;
+  --foreground: #14201a;
+  --card: #ffffff;
+  --card-foreground: #14201a;
+  --popover: #ffffff;
+  --popover-foreground: #14201a;
   --primary: #1b4332;
-  --primary-foreground: #f2f2eb;
-  --secondary: #142b1d;
-  --secondary-foreground: #f2f2eb;
-  --muted: #16201a;
-  --muted-foreground: rgba(242, 242, 235, 0.6);
-  --accent: #40916c;
-  --accent-foreground: #0a0c0b;
-  --destructive: #dc2626;
-  --destructive-foreground: #f2f2eb;
-  --border: rgba(242, 242, 235, 0.1);
-  --input: rgba(242, 242, 235, 0.15);
-  --ring: #40916c;
+  --primary-foreground: #f7f6f1;
+  --secondary: #eceee6;
+  --secondary-foreground: #14201a;
+  --muted: #eef0ea;
+  --muted-foreground: rgba(20, 32, 26, 0.62);
+  --accent: #2d6a4f;
+  --accent-foreground: #ffffff;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: rgba(20, 32, 26, 0.12);
+  --input: rgba(20, 32, 26, 0.18);
+  --ring: #2d6a4f;
 }
 
 .dark {
-  /* Site is dark-only; mirror */
-  --background: #0a0c0b;
-  --foreground: #f2f2eb;
+  /* Site is light-only; mirror */
+  --background: #f7f6f1;
+  --foreground: #14201a;
 }
 
 @layer base {
@@ -78,7 +78,7 @@
     font-family: var(--font-display);
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: rgba(64, 145, 108, 0.35); color: #fff; }
+  ::selection { background: rgba(45, 106, 79, 0.22); color: #14201a; }
 }
 
 /* ============================================
