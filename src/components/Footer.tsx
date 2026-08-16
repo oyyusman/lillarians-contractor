@@ -15,6 +15,7 @@ export function Footer() {
             <p className="max-w-sm text-foreground/50 text-sm leading-relaxed mb-8">
               Master-tier contracting services for the discerning homeowners and property managers of DC, Maryland, and Virginia.
             </p>
+            {/* Social icons — commented out, re-enable when profiles are ready
             <div className="flex gap-3">
               {["Instagram", "Facebook", "LinkedIn"].map((s) => (
                 <a
@@ -27,6 +28,7 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            */}
           </div>
 
           <div className="md:col-span-3">
