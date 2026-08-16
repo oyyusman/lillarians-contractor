@@ -83,7 +83,7 @@ function AboutPage() {
               { t: "Quality of workmanship", d: "Every job is signed off by a senior crew lead before invoicing. If it's not right, we fix it." },
               { t: "Customer satisfaction", d: "98% of our annual revenue comes from repeat clients or their direct referrals." },
               { t: "Residential & commercial", d: "From single-family yards to mixed-use property portfolios — same standard." },
-              { t: "DMV coverage", d: "Crews based in Bethesda with daily routes through DC, Northern Virginia, and Montgomery County." },
+              { t: "DMV coverage", d: "Crews based in Nokesville Virginia with daily routes through DC, Northern Virginia, and Montgomery County." },
             ].map((v, i) => (
               <Reveal key={v.t} delay={i * 100} className="border border-border p-8 hover:border-accent transition-colors rounded-sm">
                 <h3 className="text-xl font-display font-bold mb-3 uppercase">{v.t}</h3>

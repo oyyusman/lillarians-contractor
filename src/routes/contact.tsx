@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Reveal } from "@/components/Reveal";
 
@@ -19,6 +19,52 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setSent(false);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    if (!data.name || !data.email || !data.message) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "09ed372d-6835-4dc0-9b66-acdc893ec531",
+          subject: "New Contact Message from Lillarians Website",
+          ...data,
+        }),
+      });
+
+      if (response.ok) {
+        setSent(true);
+        formRef.current?.reset();
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <SiteLayout>
       <section className="pt-32 pb-16 border-b border-border">
@@ -39,8 +85,8 @@ function ContactPage() {
               {[
                 { l: "Phone", v: "+1 (703) 400-4198", href: "tel:+17034004198" },
                 { l: "Email", v: "info@lillarians.contractors", href: "mailto:info@lillarians.contractors" },
-                { l: "Address", v: "Bethesda, MD · Serving the entire DMV" },
-                { l: "Hours", v: "Mon–Sat · 7am–7pm" },
+                { l: "Address", v: "Nokesville Virginia · Serving the entire DMV" },
+                { l: "Hours", v: "7am to 7pm, seven days a week" },
               ].map((c) => (
                 <div key={c.l} className="border-b border-border pb-6">
                   <dt className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent mb-2">{c.l}</dt>
@@ -67,26 +113,32 @@ function ContactPage() {
           <Reveal delay={150}>
             <div className="border border-border p-8 md:p-10 rounded-sm bg-secondary/30">
               <h2 className="text-3xl font-display font-bold uppercase tracking-tighter mb-8">Send a message</h2>
-              {sent ? (
-                <div className="py-10 text-center">
-                  <div className="mx-auto w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4 text-accent">✓</div>
-                  <p className="font-serif italic text-xl text-accent mb-2">Message sent</p>
-                  <p className="text-sm text-foreground/60">We'll reply within one business day.</p>
-                </div>
-              ) : (
-                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
-                  <Field label="Name" name="name" required />
-                  <Field label="Email" name="email" type="email" required />
-                  <Field label="Phone" name="phone" type="tel" />
+              {sent && (
+                <div className="flex items-start gap-3 p-4 mb-4 bg-accent/10 border border-accent/30 rounded-sm">
+                  <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0 text-accent text-sm">✓</div>
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">Message</label>
-                    <textarea required rows={5} maxLength={1000} className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors resize-none" />
+                    <p className="font-semibold text-accent text-sm">Message sent!</p>
+                    <p className="text-xs text-foreground/60 mt-0.5">You will be contacted by the team shortly.</p>
                   </div>
-                  <button type="submit" className="w-full px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest rounded-sm hover:bg-accent/90 transition-colors">
-                    Send Message
-                  </button>
-                </form>
+                </div>
               )}
+              <form ref={formRef} className="space-y-4" onSubmit={handleSubmit}>
+                {error && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-sm">
+                    {error}
+                  </div>
+                )}
+                <Field label="Name" name="name" required />
+                <Field label="Email" name="email" type="email" required />
+                <Field label="Phone" name="phone" type="tel" />
+                <div>
+                  <label className="block text-[10px] font-mono uppercase tracking-widest text-foreground/60 mb-2">Message</label>
+                  <textarea name="message" required rows={5} maxLength={1000} className="w-full bg-background border border-input rounded-sm px-4 py-3 text-sm focus:border-accent transition-colors resize-none" />
+                </div>
+                <button disabled={isSubmitting} type="submit" className="w-full px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest rounded-sm hover:bg-accent/90 transition-colors disabled:opacity-50">
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </form>
             </div>
           </Reveal>
         </div>

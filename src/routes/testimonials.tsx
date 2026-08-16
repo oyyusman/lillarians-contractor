@@ -18,7 +18,7 @@ export const Route = createFileRoute("/testimonials")({
 });
 
 const REVIEWS = [
-  { n: "Margaret H.", l: "Bethesda, MD", q: "The pergola and paver patio Lillarians built is the centerpiece of our home. Every detail was considered.", s: 5 },
+  { n: "Margaret H.", l: "Nokesville Virginia", q: "The pergola and paver patio Lillarians built is the centerpiece of our home. Every detail was considered.", s: 5 },
   { n: "David R.", l: "McLean, VA", q: "Three contractors over a decade. Lillarians is the only one we call now. Consistently exceptional.", s: 5 },
   { n: "Priya K.", l: "Washington, DC", q: "From consultation to walkthrough, they treat your property like it's their own.", s: 5 },
   { n: "James O.", l: "Potomac, MD", q: "Hired them for a single junk removal. Signed a seasonal lawn contract the same week.", s: 5 },

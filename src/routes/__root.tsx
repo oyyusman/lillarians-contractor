@@ -115,7 +115,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           email: "info@lillarians.contractors",
           address: {
             "@type": "PostalAddress",
-            addressLocality: "Bethesda",
+            addressLocality: "Nokesville",
+            addressRegion: "VA",
             addressRegion: "MD",
             addressCountry: "US",
           },

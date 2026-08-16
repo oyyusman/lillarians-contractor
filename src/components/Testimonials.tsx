@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const QUOTES = [
   {
     name: "Margaret H.",
-    location: "Bethesda, MD",
+    location: "Nokesville Virginia",
     role: "Homeowner",
     stars: 5,
     text: "Lillarians completely transformed our backyard. The pergola and paver patio they built is the centerpiece of our home now. Every detail was considered.",

@@ -5,9 +5,9 @@ import { SERVICES } from "@/lib/services-data";
 export function QuoteModal() {
   const { isOpen, close, presetCategory } = useQuote();
   const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [category, setCategory] = useState(presetCategory ?? "");
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (presetCategory) setCategory(presetCategory);
@@ -30,40 +30,48 @@ export function QuoteModal() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (submitting) return;
-    setErrorMsg(null);
-    setSubmitting(true);
+    setError("");
 
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    fd.append("_subject", `New Quote Request — ${fd.get("name") ?? "Lillarians site"}`);
-    fd.append("_template", "table");
-    fd.append("_captcha", "false");
-    fd.append("Service Category", category);
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    if (!data.name || !data.phone || !data.email || !category || !data.details) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/info@lillarians.contractors", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: fd,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "09ed372d-6835-4dc0-9b66-acdc893ec531",
+          subject: "New Quote Request from Lillarians Website",
+          category,
+          ...data,
+        }),
       });
-      if (!res.ok) throw new Error(`Submit failed (${res.status})`);
-      setSubmitted(true);
-      form.reset();
-      setCategory("");
-      setTimeout(() => {
-        setSubmitted(false);
-        close();
-      }, 3200);
+
+      if (response.ok) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          close();
+        }, 5000);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } catch (err) {
-      setErrorMsg(
-        err instanceof Error ? err.message : "Could not send your request. Please try again.",
-      );
+      setError("Something went wrong. Please try again.");
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
   };
-
 
   return (
     <div
@@ -96,7 +104,7 @@ export function QuoteModal() {
             </div>
             <h3 className="font-serif italic text-2xl mb-3 text-accent">Response has been sent</h3>
             <p className="text-sm text-foreground/70 max-w-sm mx-auto">
-              Our team will contact you shortly.
+              You will be contacted by the team shortly.
             </p>
           </div>
         ) : (
@@ -110,6 +118,11 @@ export function QuoteModal() {
             </p>
 
             <form onSubmit={onSubmit} className="space-y-4">
+              {error && (
+                <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-sm">
+                  {error}
+                </div>
+              )}
               <div className="grid sm:grid-cols-2 gap-4">
                 <FormField label="Full Name" name="name" required placeholder="Jane Smith" />
                 <FormField
@@ -173,18 +186,12 @@ export function QuoteModal() {
                 />
               </div>
 
-              {errorMsg && (
-                <p className="text-xs text-red-400 font-mono pt-1" role="alert">
-                  {errorMsg}
-                </p>
-              )}
-
               <button
                 type="submit"
-                disabled={submitting}
-                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
+                className="w-full mt-2 px-8 py-4 bg-accent text-accent-foreground font-mono text-xs uppercase tracking-widest hover:bg-accent/90 transition-colors rounded-sm disabled:opacity-50"
               >
-                {submitting ? "Sending…" : "Send Request"}
+                {isSubmitting ? "Sending..." : "Send Request"}
               </button>
               <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 text-center pt-2">
                 Serving DC · Maryland · Virginia
