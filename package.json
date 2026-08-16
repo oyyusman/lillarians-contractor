@@ -1,4 +1,5 @@
 {
+  "homepage": "https://oyyusman.github.io/lillarians-contractor",
   "name": "tanstack_start_ts",
   "private": true,
   "sideEffects": false,
@@ -7,6 +8,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
+    "predeploy": "node node_modules/vite/bin/vite.js build",
+    "deploy": "node node_modules/gh-pages/bin/gh-pages.js -d .output/public",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
